@@ -1,0 +1,5 @@
+# データの除外
+data/
+
+# Pythonの一時フォルダ
+__pycache__/
