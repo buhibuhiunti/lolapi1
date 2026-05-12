@@ -105,7 +105,7 @@ def extract_lane_matchup(raw_match: dict) -> list[dict]:
         win = p.get("win", False)
         summoner_id = p.get("summonerId", "")
 
-        # 敵陣営で同じレーンのプレイヤーを特定
+        # 敵陣営で同じレーンのプレイヤーを特定（1人だけ）
         for opp in participants:
             if opp.get("teamId", 0) != team and opp.get("lane", "") == lane:
                 matchups.append({
@@ -117,6 +117,7 @@ def extract_lane_matchup(raw_match: dict) -> list[dict]:
                     "duration_min": dur_min,
                     "win": win,
                 })
+                break  # 同じレーンの1人目のみ
 
     return matchups
 
@@ -144,7 +145,7 @@ def fetch_lane_data(api_key: str, puuid: str, output_path: str, count: int = 20,
 
         time.sleep(0.6)
 
-    print(f"\n[2/3] 抽出: {len(all_matchups)}レーン対戦")
+    print(f"\n[2/3] 抽出: {len(set(m['match_id'] for m in all_matchups))}マッチ")
 
     # 最終保存
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
