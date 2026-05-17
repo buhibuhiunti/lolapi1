@@ -254,6 +254,7 @@ def interactive_filter(matchups, puuids_data):
         print(f"  [4] フィルタ一覧・解除")
         print(f"  [5] 詳細リスト表示")
         print(f"  [6] 結果を保存")
+        print(f"  [7] 分析用データ生成")
         print(f"  [0] 終了")
 
         choice = input("\n選択: ").strip()
@@ -314,6 +315,14 @@ def interactive_filter(matchups, puuids_data):
             output_path = generate_filename(filters, os.path.dirname(__file__))
             print(f"  ファイル: {output_path}")
             save_filtered(filtered, output_path)
+        elif choice == "7":
+            # 分析用JSONを生成して analyze_opponents.py に渡す
+            output_path = generate_filename(filters, os.path.dirname(__file__))
+            save_filtered(filtered, output_path)
+            input_json_path = os.path.join(os.path.dirname(__file__), "data", "analysis_input.json")
+            with open(input_json_path, "w", encoding="utf-8") as f:
+                json.dump({"source_file": output_path}, f, indent=2, ensure_ascii=False)
+            print(f"\n  分析用JSON生成: {input_json_path}")
 
         elif choice == "0":
             print("\n終了しました。")
