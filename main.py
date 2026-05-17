@@ -171,7 +171,6 @@ def save_filtered(filtered, output_path):
 def load_puuids(data_dir):
     """保存されたPUUID一覧を読み込む"""
     puuids_path = os.path.join(data_dir, "puuids.json")
-    puuid_path = os.path.join(data_dir, "puuid.json")
     
     result = []
     
@@ -180,17 +179,6 @@ def load_puuids(data_dir):
         try:
             data = load_data(puuids_path)
             if isinstance(data, list):
-                result.extend(data)
-        except Exception:
-            pass
-    
-    # puuid.json を読み込む（単一PUUID形式）
-    if os.path.exists(puuid_path):
-        try:
-            data = load_data(puuid_path)
-            if isinstance(data, dict):
-                result.append(data)
-            elif isinstance(data, list):
                 result.extend(data)
         except Exception:
             pass

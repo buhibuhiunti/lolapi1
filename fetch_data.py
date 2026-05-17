@@ -442,9 +442,6 @@ if __name__ == "__main__":
         elif mode == "2":
             # Load all available PUUIDs
             puuids = load_puuids("data/puuids.json")
-            puuid_single = load_puuid_data("data/puuid.json")
-            if puuid_single:
-                puuids.append(puuid_single)
             
             if not puuids:
                 print("data/puuids.json が見つかりません。モード1でPUUIDを先に取得してください。")
